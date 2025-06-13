@@ -42,11 +42,13 @@
 	let sectionPaddingBlockUnit = $state('auto'); // 'auto', '%', 'rem', 'px'
 	let authorBlockGap = $state(3);
 	let authorBlockGapUnit = $state('auto'); // 'auto', '%', 'rem', 'px'
+	let blockMarginTop = $state(0);
+	let blockMarginTopUnit = $state('auto'); // 'auto', '%', 'rem', 'px'
 
 	const htmlValue = $derived(`
   <section
-	class="relative not-prose isolate overflow-hidden bg-gray-100 px-6 py-10 lg:px-8 rounded-3xl shadow mt-32"
-    style="padding-inline: ${sectionPaddingInlineUnit !== 'auto' ? `${sectionPaddingInline}${sectionPaddingInlineUnit}` : '2.5rem'}; padding-block: ${sectionPaddingBlockUnit !== 'auto' ? `${sectionPaddingBlock}${sectionPaddingBlockUnit}` : '2rem'}"
+	class="relative not-prose isolate overflow-hidden bg-gray-100 px-6 py-10 lg:px-8 rounded-3xl shadow"
+    style="padding-inline: ${sectionPaddingInlineUnit !== 'auto' ? `${sectionPaddingInline}${sectionPaddingInlineUnit}` : '2.5rem'}; padding-block: ${sectionPaddingBlockUnit !== 'auto' ? `${sectionPaddingBlock}${sectionPaddingBlockUnit}` : '2rem' }; margin-top: ${blockMarginTopUnit !== 'auto' ? `${blockMarginTop}${blockMarginTopUnit}` : '8rem'}"
 >
 	<div
 		class="hidden sm:absolute sm:-top-10 sm:right-1/2 sm:-z-10 sm:mr-10 sm:block sm:transform-gpu sm:blur-3xl"
@@ -235,9 +237,7 @@
 					placeholder="Enter quate author"
 				/>
 
-                <div class="flex gap-3">
-                    
-                </div>
+				<div class="flex gap-3"></div>
 				<div class="flex gap-3">
 					<div class="flex w-1/2 items-end gap-3">
 						<div class="flex w-full flex-col items-center justify-center gap-2">
@@ -433,6 +433,40 @@
 		<Separator class="w-full" />
 
 		<div class="flex flex-wrap items-center justify-between gap-3">
+			<Label for="margins">Margin above block</Label>
+			<div class="flex w-[80%] flex-col gap-3">
+				<div class="flex w-full items-end gap-3">
+					<div class="flex w-full flex-col items-center justify-center gap-2">
+						{#if blockMarginTopUnit === 'auto'}
+							<p class="text-sm text-gray-500">
+								Margin is set to auto, margin will be adjusted automatically
+							</p>
+						{:else}
+							<Input class="w-14" bind:value={blockMarginTop} />
+							<Slider
+								type="single"
+								max={blockMarginTopUnit === '%' ? 100 : blockMarginTopUnit === 'rem' ? 5 : 1000}
+								step={0.25}
+								bind:value={blockMarginTop}
+							/>
+						{/if}
+					</div>
+					<Select.Root type="single" bind:value={blockMarginTopUnit}>
+						<Select.Trigger>{blockMarginTopUnit}</Select.Trigger>
+						<Select.Content>
+							<Select.Item value="auto">auto</Select.Item>
+							<Select.Item value="%">%</Select.Item>
+							<Select.Item value="rem">rem</Select.Item>
+							<Select.Item value="px">px</Select.Item>
+						</Select.Content>
+					</Select.Root>
+				</div>
+			</div>
+		</div>
+
+		<Separator class="w-full" />
+
+		<div class="flex flex-wrap items-center justify-between gap-3">
 			<Label for="margins">Spaces in author block</Label>
 			<div class="flex w-[80%] flex-col gap-3">
 				<div class="flex w-full items-end gap-3">
@@ -536,10 +570,10 @@
 			>Copy to clipboard</Button
 		>
 	</div>
-	<div class="flex w-1/2 relative h-full flex-col gap-2">
+	<div class="relative flex h-full w-1/2 flex-col gap-2">
 		<h2 class="text-center text-lg font-bold">How it will look like</h2>
 
-		<div class="prose sticky h-fit left-0 top-10 mx-auto w-full max-w-3xl">
+		<div class="prose sticky top-10 left-0 mx-auto h-fit w-full max-w-3xl">
 			{@html htmlValue}
 		</div>
 	</div>
