@@ -111,8 +111,8 @@
 </section>`);
 </script>
 
-<section class="flex gap-2">
-	<div class="mb-5 flex w-1/2 flex-col gap-4">
+<section class="flex gap-2 flex-col-reverse">
+	<div class="mb-5 flex flex-col gap-4">
 		<h2 class="text-center text-2xl font-semibold text-gray-900">Modify data for this Quote</h2>
 		<div class="flex flex-wrap items-center justify-between gap-3">
 			<Label for="image">Logo Image URL</Label>
@@ -570,7 +570,7 @@
 			>Copy to clipboard</Button
 		>
 	</div>
-	<div class="relative flex h-full w-1/2 flex-col gap-2">
+	<div class="relative flex flex-col gap-2">
 		<h2 class="text-center text-lg font-bold">How it will look like</h2>
 
 		<div class="prose sticky top-10 left-0 mx-auto h-fit w-full max-w-3xl">
